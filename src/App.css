@@ -1,12 +1,33 @@
 @import "tailwindcss";
 
+
+@font-face {
+  font-family: 'Samim';
+  src: url('/fonts/Samim.eot'); 
+  src: url('/fonts/Samim.eot') format('embedded-opentype'),
+  url('/fonts/Samim.woff') format('woff'),
+  url('/fonts/Samim.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Samim-Bold';
+  src: url('/fonts/Samim-Bold.eot'); 
+  src: url('/fonts/Samim-Bold.eot') format('embedded-opentype'),
+  url('/fonts/Samim-Bold.woff') format('woff'),
+  url('/fonts/Samim-Bold.ttf') format('truetype');
+}
+
+body{
+  direction: rtl;
+    font-family: Samim;
+}
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
-}
 
+
+}
 .logo {
   height: 6em;
   padding: 1.5em;

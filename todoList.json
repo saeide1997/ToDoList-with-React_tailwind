@@ -1,0 +1,39 @@
+{
+  "todoList": [
+    {
+      "id": 1,
+      "name": "خرید نان",
+      "status": false,
+      "priority": 3,
+      "description": "خرید نان برای صبحانه"
+    },
+    {
+      "id": 2,
+      "name": "تمرین TRX",
+      "status": true,
+      "priority": 2,
+      "description": "تمرین TRX روزهای فرد"
+    },
+    {
+      "id": 3,
+      "name": "زبان انگلیسی",
+      "status": false,
+      "priority": 1,
+      "description": "مطالعه ۳۰ دقیقه زبان انگلیسی"
+    },
+    {
+      "id": 4,
+      "name": "نوشتن کد ",
+      "status": false,
+      "priority": 2,
+      "description": "نوشتن کد برای پروژه ToDo"
+    },
+    {
+      "id": 5,
+      "name": " پادکست ",
+      "status": true,
+      "priority": 3,
+      "description": "مرور پادکست دیروز"
+    }
+  ]
+}
