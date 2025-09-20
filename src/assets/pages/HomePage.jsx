@@ -2,7 +2,7 @@ import TodoList from "../components/TodoList";
 
 function HomePage() {
     return (
-        <div>
+        <div className='mt-20'>
             
             <TodoList />
         </div>
