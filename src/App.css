@@ -3,26 +3,27 @@
 
 @font-face {
   font-family: 'Samim';
-  src: url('/fonts/Samim.eot'); 
+  src: url('/fonts/Samim.eot');
   src: url('/fonts/Samim.eot') format('embedded-opentype'),
-  url('/fonts/Samim.woff') format('woff'),
-  url('/fonts/Samim.ttf') format('truetype');
+    url('/fonts/Samim.woff') format('woff'),
+    url('/fonts/Samim.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Samim-Bold';
-  src: url('/fonts/Samim-Bold.eot'); 
+  src: url('/fonts/Samim-Bold.eot');
   src: url('/fonts/Samim-Bold.eot') format('embedded-opentype'),
-  url('/fonts/Samim-Bold.woff') format('woff'),
-  url('/fonts/Samim-Bold.ttf') format('truetype');
+    url('/fonts/Samim-Bold.woff') format('woff'),
+    url('/fonts/Samim-Bold.ttf') format('truetype');
 }
 
-body{
+body {
   direction: rtl;
-    font-family: Samim;
-  height: 100vh;
-  background-color: #f3f4f6;
+  font-family: Samim;
+
+  /* background-color: #f3f4f6; */
 }
+
 #root {
   max-width: 1280px;
   /*margin: 0 auto;*/
@@ -31,15 +32,18 @@ body{
 
 
 }
+
 .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -48,6 +52,7 @@ body{
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -65,4 +70,37 @@ body{
 
 .read-the-docs {
   color: #888;
+}
+
+.custom-input {
+  border-radius: 15px;
+  /* border: 1px #0c8af8 solid; */
+  padding: 20px 12px;
+  background-color: rgb(247, 247, 247);
+  height: 22px;
+  color: #3d3d3d;
+  /* box-shadow: 0 0 2px #0074d9; */
+  width: 40vw;
+  direction: ltr;
+}
+
+.custom-input:focus {
+  outline: none;
+  border: 1px solid #0c8af8;
+  box-shadow: 0 0 10px 2px #0074d9;
+}
+
+.selectBox__control {
+  background-color: rgb(247, 247, 247) !important;
+  border-radius: 12px !important;
+  border: none !important;
+}
+
+.selectBox__option--is-focused {
+  background-color: #e0e0ff;
+}
+
+.selectBox__option--is-selected {
+  background-color: blue;
+  color: white;
 }
