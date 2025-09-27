@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { updateTodoAsync } from "../../state/todoListSilce";
+import { AuthContext } from "../../context/AuthContext";
 
 function TodoItem({ todo, onEdit }) {
+    
     const dispatch = useDispatch();
 
     const handleStatusChange = async (e) => {
@@ -14,7 +16,7 @@ function TodoItem({ todo, onEdit }) {
             console.error("Update failed:", err);
         }
     };
-console.log('todo', todo);
+// console.log('todo', todo);
 
     // تعیین کلاس‌های priority
     let border, chbg, chborder 
@@ -37,15 +39,15 @@ console.log('todo', todo);
     }
 
     return (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center  gap-2" >
             <input
                 type="checkbox"
                 checked={todo.status}
                 onChange={handleStatusChange}
                 className={`appearance-none flex items-center justify-center w-8 h-12 border-2 ${border} rounded-md ${chbg} ${chborder} relative checked:before:content-['✔'] checked:before:text-white checked:before:top-[-2px] checked:before:left-[2px] ml-2`}
             />
-            <div
-                className={`border rounded-2xl px-4 py-2 flex flex-col w-full gap-2 shadow-lg cursor-pointer ${border} ${todo.status && 'opacity-50'}`}
+            <div style={{ background: todo.color }}
+                className={` rounded-lg px-4 py-3 flex flex-col w-full gap-2 shadow-lg cursor-pointer  ${todo.status && 'opacity-50'}`}
                 onClick={onEdit} // کلیک روی تسک -> باز شدن Modal برای ویرایش
             >
                 <h2 className={`${todo.status && 'line-through'} font-semibold`}>{todo.name}</h2>

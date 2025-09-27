@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useDispatch } from "react-redux";
 import DatePicker from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/time_picker";
@@ -6,9 +6,13 @@ import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import DateObject from "react-date-object";
 import Select from "react-select";
-import { addTodoAsync, updateTodoAsync } from "../../state/todoListSilce";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { addTodoAsync, deleteTodoAsync, removeTodo, updateTodoAsync } from "../../state/todoListSilce";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function TodoModal({ isOpen, onClose, existingTodo }) {
+      const {user} = useContext(AuthContext);
+    console.log('todouser',user?.id);
   const dispatch = useDispatch();
 
   const [name, setName] = useState("");
@@ -60,6 +64,7 @@ export default function TodoModal({ isOpen, onClose, existingTodo }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const todo = {
+      userID: user?.id,
       name,
       color,
       status: status?.value,
@@ -67,6 +72,7 @@ export default function TodoModal({ isOpen, onClose, existingTodo }) {
       repeat: repeat?.value,
       dueDate: dueDate ? dueDate.toDate() : null,
     };
+    console.log('submittodo', todo);
 
     if (existingTodo) {
       dispatch(updateTodoAsync({ id: existingTodo.id, updates: todo }));
@@ -75,6 +81,13 @@ export default function TodoModal({ isOpen, onClose, existingTodo }) {
     }
 
     onClose(); // close modal after submit
+  };
+
+  const handleDelete = () => {
+    if (existingTodo) {
+      dispatch(deleteTodoAsync(existingTodo.id));
+      onClose();
+    }
   };
 
   if (!isOpen) return null;
@@ -125,7 +138,7 @@ export default function TodoModal({ isOpen, onClose, existingTodo }) {
             ))}
           </div>
 
-          <Select value={status} onChange={setStatus} options={statusOptions} placeholder="وضعیت" classNamePrefix="selectBox" />
+          {/* <Select value={status} onChange={setStatus} options={statusOptions} placeholder="وضعیت" classNamePrefix="selectBox" /> */}
           <Select value={priority} onChange={setPriority} options={priorityOptions} placeholder="اولویت" classNamePrefix="selectBox" />
           <Select value={repeat} onChange={setRepeat} options={repeatOptions} placeholder="تکرار" classNamePrefix="selectBox" />
           <div className="flex gap-5">
@@ -146,14 +159,17 @@ export default function TodoModal({ isOpen, onClose, existingTodo }) {
               inputClass="custom-input"
             />
 
-            </div>
+          </div>
+          <div className="flex gap-2">
+            <button
+              type="submit"
+              className={`bg-gray-700  rounded-xl text-yellow-300 font-bold text-lg  p-2 ${existingTodo ? "w-3/4" : "w-full"}`}
+            >
+              {existingTodo ? "ویرایش" : "افزودن"}
+            </button>
+            {existingTodo ? <button className="bg-amber-500 rounded-xl text-white font-bold text-lg p-2 w-1/4" onClick={handleDelete}><DeleteOutlineIcon /></button> : null}
 
-          <button
-            type="submit"
-            className="bg-gray-700  rounded-xl text-yellow-300 font-bold text-lg  p-2 w-full"
-          >
-            {existingTodo ? "ویرایش" : "افزودن"}
-          </button>
+          </div>
         </form>
       </div>
     </div>

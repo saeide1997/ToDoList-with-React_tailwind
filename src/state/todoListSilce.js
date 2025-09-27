@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addItem, getItems, updateItem } from "../assets/api/data";
+import { addItem, deleteItem, getItems, updateItem } from "../assets/api/data";
 
 export const fetchTodos = createAsyncThunk(
     "todos/fetchTodos",
@@ -19,6 +19,7 @@ export const addTodoAsync = createAsyncThunk(
     async (newTodo, { rejectWithValue }) => {
         try {
             const created = await addItem(newTodo); // API آیتم ساخته شده را برمی‌گرداند
+            console.log('created', created);
             return created;
         } catch (err) {
             return rejectWithValue(err.message || "Failed to add");
@@ -35,6 +36,18 @@ export const updateTodoAsync = createAsyncThunk(
             return updated; // API باید آیتم آپدیت شده را برگرداند
         } catch (err) {
             return rejectWithValue(err.message || "Failed to update");
+        }
+    }
+);
+
+export const deleteTodoAsync = createAsyncThunk(
+    "todos/deleteTodoAsync",
+    async (id, { rejectWithValue }) => {
+        try {
+            await deleteItem(id);
+            return id;
+        } catch (err) {
+            return rejectWithValue(err.message || "Failed to delete");
         }
     }
 );
@@ -120,7 +133,20 @@ export const todoListSlice = createSlice({
             .addCase(updateTodoAsync.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload || action.error?.message;
+            })
+            .addCase(deleteTodoAsync.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(deleteTodoAsync.fulfilled, (state, action) => {
+                state.loading = false;
+                state.todos = state.todos.filter(t => t.id !== action.payload);
+            })
+            .addCase(deleteTodoAsync.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload || action.error?.message;
             });
+
     },
 });
 

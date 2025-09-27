@@ -1,9 +1,10 @@
+import TodoModal from "../components/TodoModal";
 import TodoForm from "../components/TodoModal";
 
 function NewTask() {
     return (
         <div >
-            <TodoForm />
+            <TodoModal />
         </div>
     );
 }

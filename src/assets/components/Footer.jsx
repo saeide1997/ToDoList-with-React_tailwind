@@ -1,7 +1,9 @@
 
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import TodoModal from "./TodoModal";
+import { AuthContext } from "../../context/AuthContext";
 
 const items = [
     { id: "home", label: "خانه", path: "/", icon: HomeIcon },
@@ -12,6 +14,14 @@ const items = [
 
 export default function Footer() {
     const [active, setActive] = useState(0);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [selectedTodo, setSelectedTodo] = useState(null);
+
+    const handleAdd = () => {
+        setSelectedTodo(null); // فرم خالی برای افزودن
+        setModalOpen(true);
+        setActive(0);
+    };
 
     // محاسبهٔ موقعیت bubble به صورت درصد (برای 4 آیتم)
     const step = 100 / items.length;
@@ -71,19 +81,31 @@ export default function Footer() {
                     <div className="text-white w-full px-6 py-3 rounded-full  flex justify-between items-center shadow-xl overflow-visible flex-row-reverse">
 
                         {items.map((it, idx) => {
-                            const Icon = it.icon;HomeIcon
+                            const Icon = it.icon; HomeIcon
                             const isActive = idx === active;
                             return (
-                               <button
+                                <button
                                     key={it.id}
-                                    onClick={() => setActive(idx)}
-                                    className=" relative z-20 flex flex-col items-center gap-1 w-12 h-12 justify-center bg-transparent border-0"
+                                    onClick={() => {
+                                        if (it.id !== 'new') {
+                                            setActive(idx);
+                                        } else {
+                                            handleAdd();
+                                            setActive(idx);
+                                        }
+                                    }}
+                                    className="relative z-20 flex flex-col items-center gap-1 w-12 h-12 justify-center bg-transparent border-0"
                                     aria-current={isActive ? "page" : undefined}
                                     title={it.label}
-                                ><Link to={it.path} >
-                                   {!isActive && <Icon active={isActive} />}
-
-                               </Link></button>
+                                >
+                                    {it.id !== 'new' ? (
+                                        <Link to={it.path}>
+                                            {!isActive && <Icon active={isActive} />}
+                                        </Link>
+                                    ) : (
+                                        !isActive && <Icon active={isActive} />
+                                    )}
+                                </button>
                             );
                         })}
                     </div>
@@ -104,6 +126,12 @@ export default function Footer() {
                     </div>
                 </div>
             </div>
+            {/* Modal */}
+            <TodoModal
+                isOpen={modalOpen}
+                onClose={() => { setModalOpen(false); setActive(0); }}
+                existingTodo={selectedTodo}
+            />
         </nav>
     );
 }
